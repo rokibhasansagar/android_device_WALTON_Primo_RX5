@@ -28,8 +28,7 @@ PRODUCT_MANUFACTURER := WALTON
 # Ramdisk
 PRODUCT_PACKAGES += \
     $(LOCAL_PATH)/recovery/root/etc/recovery.fstab:root/etc/recovery.fstab \
-    $(LOCAL_PATH)/recovery/root/res/keys:root/res/keys
-    $(LOCAL_PATH)/recovery/root/sbin/permissive.sh:root/sbin/permissive.sh \
+    $(LOCAL_PATH)/recovery/root/res/keys:root/res/keys \
     $(LOCAL_PATH)/recovery/root/factory_init.project.rc:root/factory_init.project.rc \
     $(LOCAL_PATH)/recovery/root/factory_init.rc:root/factory_init.rc \
     $(LOCAL_PATH)/recovery/root/init.recovery.mt6735.rc:root/init.recovery.mt6735.rc \
