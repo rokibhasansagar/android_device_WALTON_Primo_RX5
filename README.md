@@ -6,6 +6,25 @@ The Mid-Range Priced Walton Primo RX5 (Primo_RX5 / gionee6735_65u_m0) Smartphone
 It runs on Gionee's Custom AmigoOS v3.2 based on Android OS v6.0 (Marshmallow).
 >For More Info, go to Official [WaltonBD WebSite](http://www.waltonbd.com/index.php?route=product/category&path=24_85) and [Walton Forum](http://www.waltonforum.com/forum/849-walton-primo-rx5/)
 
+### Special Features
+- [x] Built with Latest Source from 20180730
+- [x] Added Support for F2FS, NTFS, ExFAT, FUSE Filesystem
+- [x] Added Logcat, FB2PNG
+- [x] Excluded SuperSU section
+
+### Check the [Releases](https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5/releases) Section to Download.
+
+It may not be Totally Working, :worried: 
+
+But I will provide Tweaked Edition on the Releases.
+  >- [x] Languages removed other than English,
+  >- [x] Removed SuperSU and TWRP App Installation scripts,
+  >- [x] Added a Brand-New Deep-Purple Look in Theme,
+  >- [x] Extended support for Using other UI Themes from SDCard,
+  >- [x] A little more Optimized with Personal Care.
+
+So, Stay Tuned :wink:
+
 ### Specification Chart
 Basic         | Spec Sheet
 :------------:|:-------------------------
@@ -33,5 +52,3 @@ Audio         | Single output (From Back) with DTS Sound System
 ![Walton Primo RX5](http://productreviewbd.com/mobile-price-in-bangladesh/wp-content/uploads/2017/04/walton-primo-RX5.jpg "Walton Primo RX5")
 
 >Created with the help of [TWRPBuilder](https://twrpbuilder.github.io/)
-
-#### Check the [Releases](https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5/releases) Section to Download.
