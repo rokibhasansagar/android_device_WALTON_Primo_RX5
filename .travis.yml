@@ -20,7 +20,7 @@ before_install:
   - docker pull yshalsager/cyanogenmod:latest
 before_script:
   - cd $HOME && mkdir twrp
-  - wget -q https://github.com/PhantomZone54/twrp_sources_norepo/releases/download/v3.2.3-20180815/MinimalOmniRecovery-twrp-6.0-norepo-20180815.tar.xz
+  - wget -q https://github.com/PhantomZone54/twrp_sources_norepo/releases/download/v3.2.3-20180830/MinimalOmniRecovery-twrp-6.0-norepo-20180830.tar.xz
     -O $HOME/twrp.tar.xz
   - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
 script:
@@ -38,7 +38,7 @@ after_success:
   - cp $HOME/twrp/out/target/product/Primo_RX5/recovery.img $HOME/twrp/TWRP-$version-Primo_RX5-$(date +"%Y%m%d").img
   - cd $HOME/twrp/
   - curl -s --upload-file TWRP-$version-Primo_RX5-$(date +"%Y%m%d").img https://transfer.sh/ && echo ""
-  - wput TWRP-$version-Primo_RX5-$(date +"%Y%m%d").img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$(date +%s)/
+  - wput TWRP-$version-Primo_RX5-$(date +"%Y%m%d").img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$(date +%Y%m%d-%H%M)/
 deploy:
   skip_cleanup: true
   provider: releases
