@@ -7,7 +7,7 @@ It runs on Gionee's Custom AmigoOS v3.2 based on Android OS v6.0 (Marshmallow).
 >For More Info, go to Official [WaltonBD WebSite](http://www.waltonbd.com/index.php?route=product/category&path=24_85) and [Walton Forum](http://www.waltonforum.com/forum/849-walton-primo-rx5/)
 
 ### Special Features
-- [x] Built with Latest Source from 20180730
+- [x] Built with Latest Source from 20180830
 - [x] Added Support for F2FS, NTFS, ExFAT, FUSE Filesystem
 - [x] Added Logcat, FB2PNG
 - [x] Excluded SuperSU section
