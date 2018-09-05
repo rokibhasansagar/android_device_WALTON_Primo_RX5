@@ -29,15 +29,15 @@ script:
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
     cd /home/cmbuild/twrp/
-    source build/envsetup.sh && lunch omni_Primo_RX5-eng && make -j32 recoveryimage 1>/dev/null
+    source build/envsetup.sh && lunch omni_Primo_RX5-eng && mka recoveryimage 1>/dev/null
     exit
     EOF
 after_success:
   - export version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d '"' -f2)
-  - cp $HOME/twrp/out/target/product/Primo_RX5/recovery.img $HOME/twrp/TWRP-$version-Primo_RX5-$(date +"%Y%m%d").img
+  - cp $HOME/twrp/out/target/product/Primo_RX5/recovery.img $HOME/twrp/TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img
   - cd $HOME/twrp/
-  - curl -s --upload-file TWRP-$version-Primo_RX5-$(date +"%Y%m%d").img https://transfer.sh/ && echo ""
-  - wput TWRP-$version-Primo_RX5-$(date +"%Y%m%d").img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$(date +%Y%m%d-%H%M)/
+  - curl -s --upload-file TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img https://transfer.sh/ && echo ""
+  - wput TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$(date +%Y%m%d-%H%M)/
 deploy:
   skip_cleanup: true
   provider: releases
