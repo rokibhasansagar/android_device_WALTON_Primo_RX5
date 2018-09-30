@@ -18,7 +18,7 @@
 
 /system       ext4        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/system        /dev/block/mmcblk0p20     flags=display="System";backup=1;canbewiped;wipeingui
 /cache        ext4        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/cache         /dev/block/mmcblk0p21     flags=display="Cache";canbewiped;wipeingui;wipeduringfactoryreset
-/data         ext4        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/userdata      /dev/block/mmcblk0p22     flags=length=-16384;display="Data";backup=1;canbewiped;wipeingui;wipeduringfactoryreset;settingsstorage;encryptable=/dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/metadata
+/data         ext4        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/userdata      /dev/block/mmcblk0p22     flags=length=-16384;display="Data";backup=1;canbewiped;wipeingui;wipeduringfactoryreset;settingsstorage;fileencryption="ice:aes-256-heh";encryptable=/dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/metadata
 
 /boot         emmc        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/boot          /dev/block/mmcblk0p7      flags=display="Boot";backup=1;flashimg=1
 /logo         emmc        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/logo          /dev/block/mmcblk0p9      flags=display="Logo";backup=1;flashimg=1

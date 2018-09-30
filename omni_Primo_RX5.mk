@@ -26,8 +26,10 @@ PRODUCT_MODEL := Primo_RX5
 PRODUCT_MANUFACTURER := WALTON
 
 # Ramdisk
-PRODUCT_PACKAGES += \
+PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/etc/recovery.fstab:root/etc/recovery.fstab \
+    $(LOCAL_PATH)/recovery/root/sbin/permissive.sh:root/sbin/permissive.sh \
+    platform/bionic/libc/zoneinfo/tzdata:root/system/usr/share/zoneinfo/tzdata \
     $(LOCAL_PATH)/recovery/root/res/keys:root/res/keys \
     $(LOCAL_PATH)/recovery/root/factory_init.project.rc:root/factory_init.project.rc \
     $(LOCAL_PATH)/recovery/root/factory_init.rc:root/factory_init.rc \
@@ -36,4 +38,3 @@ PRODUCT_PACKAGES += \
     $(LOCAL_PATH)/recovery/root/meta_init.project.rc:root/meta_init.project.rc \
     $(LOCAL_PATH)/recovery/root/meta_init.rc:root/meta_init.rc \
     $(LOCAL_PATH)/recovery/root/ueventd.mt6735.rc:root/ueventd.mt6735.rc
-
