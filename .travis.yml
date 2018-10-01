@@ -23,9 +23,9 @@ before_script:
   - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-dc754938ac0301298f20/PitchBlack-Recovery-master-norepo-20181001.tar.xz
     -O $HOME/twrp.tar.xz
   - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
-  - rm vendor/pb/pb_build.sh
-  - wget https://gist.githubusercontent.com/rokibhasansagar/81f8278671c12205e7d1a54776717899/raw/5a04578fb290baf4794a88eab0e580c70354476b/pb_build.sh -O vendor/pb/pb_build.sh
-  - chmod a+x vendor/pb/pb_build.sh
+  - rm twrp/vendor/pb/pb_build.sh
+  - wget https://gist.githubusercontent.com/rokibhasansagar/81f8278671c12205e7d1a54776717899/raw/5a04578fb290baf4794a88eab0e580c70354476b/pb_build.sh -O twrp/vendor/pb/pb_build.sh
+  - chmod a+x twrp/vendor/pb/pb_build.sh
   - sleep 5 && clear
 script:
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp-test device/WALTON/Primo_RX5
