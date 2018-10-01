@@ -26,6 +26,7 @@ before_script:
   - rm vendor/pb/pb_build.sh
   - wget https://gist.githubusercontent.com/rokibhasansagar/81f8278671c12205e7d1a54776717899/raw/5a04578fb290baf4794a88eab0e580c70354476b/pb_build.sh -O vendor/pb/pb_build.sh
   - chmod a+x vendor/pb/pb_build.sh
+  - sleep 5 && clear
 script:
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp-test device/WALTON/Primo_RX5
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
