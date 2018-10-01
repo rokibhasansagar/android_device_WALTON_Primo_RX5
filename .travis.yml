@@ -29,22 +29,29 @@ script:
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
     cd /home/cmbuild/twrp/
+    rm vendor/pb/pb_build.sh
+    wget -q https://gist.githubusercontent.com/rokibhasansagar/81f8278671c12205e7d1a54776717899/raw/5a04578fb290baf4794a88eab0e580c70354476b/pb_build.sh -O vendor/pb/pb_build.sh
+    chmod a+x vendor/pb/pb_build.sh
     source build/envsetup.sh && lunch omni_Primo_RX5-eng && mka recoveryimage
     exit
     EOF
 after_success:
-  - export version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d '"' -f2)
-  - cp $HOME/twrp/out/target/product/Primo_RX5/recovery.img $HOME/twrp/PBTWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img
   - cd $HOME/twrp/
-  - curl -s --upload-file PBTWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img https://transfer.sh/ && echo ""
-  - wput PBTWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//PBTWBuild-$(date +%Y%m%d-%H%M)/
+  - cp out/target/product/Primo_RX5/PitchBlack-*.zip .
+  - curl -s --upload-file PitchBlack-*.zip https://transfer.sh/ && echo ""
+  - wput PitchBlack-*.zip ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//PBTWBuild-$(date +%Y%m%d-%H%M)/
+#after_failure:
+  #- cd $HOME/twrp/
+  #- cp out/target/product/Primo_RX5/PitchBlack-*.zip .
+  #- curl -s --upload-file PitchBlack-*.zip https://transfer.sh/ && echo ""
+  #- wput PitchBlack-*.zip ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//PBTWBuild-$(date +%Y%m%d-%H%M)/
 deploy:
   skip_cleanup: true
   provider: releases
   api_key:
     secure: "K77oR/TPjI1E5QPejZB1n56eIhQm2a1dS44JDLAmC/o/r8mmSDPRE9jpJzviahv1jM/Ck4X6SFN+c/U7gA48yzmm9YVs6QvKzvds+4AQxf4eqBFQsIwKhelegLAdzs8mBflj9oPuWR+xLFc5WDUHklRFsWs+B1vna76OjL97ZWxwhRpGbWjqathQNvzrIwAFJ6+q9InpqOf7+x8fp0Fr5fUJHiiXZcty0+NNc/T0NqNmkNVgsAwgVEFv+pieDCUJCUbfWoDDJ8j8YzPj2TpzIGZQ+6psNy+L+07wh+SFDV0G6aK1jWPqu09HdhfxRYhBS+3fxbYFJrTv36dM+Nq2uK+ChWD1Q4ovy4XqSR3OQQCN5/yQSCDvX/JZ24ehcvwvWsBqZ7J11duFFLjSpap+g8rGi36JjN/JrG0F/4RQrneOrMIYWA5avN+N+lP/bNquEO7Zde/nGMIKxAQ3r9nvZxlNdc1oucN89k6Y1lWTo44SH9CgP6JCMEbzpW0aIe9phz3cRutJ60rFe9vLQLPmOHyBBPKOALF/MbvRCGdwgu0ciVqUB3SbV+UdeabG7ScVSDaUZ7gAqAsO/a17rLYYcRLSPpyoapCJTYL7vIvQFF66vUGOZMKwSI45TF9xG/bvcxVIi0IMvU8OgzKS7jGf63BIGNFaZxV+QXPZKoCn9T0="
   file_glob: true
-  file: $HOME/twrp/*.img
+  file: $HOME/twrp/PitchBlack-*.zip
   on:
     tags: false
     repo: rokibhasansagar/android_device_twrp_WALTON_Primo_RX5
