@@ -19,19 +19,12 @@ services:
 before_install:
   - docker pull yshalsager/cyanogenmod:latest
 before_script:
-  - cd $HOME && mkdir twrp && mkdir twrp/.repo
-  - PATH=~/bin:$PATH
-  - curl https://storage.googleapis.com/git-repo-downloads/repo > ~/bin/repo
-  - chmod a+x ~/bin/repo
-  - git config --global user.name rokibhasansagar
-  - git config --global user.email rokibhasansagar2014@outlook.com
-  - git config --global color.ui true
+  - cd $HOME && mkdir twrp
   - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-dc754938ac0301298f20/PitchBlack-Recovery-master-norepo-20181001.tar.xz
     -O $HOME/twrp.tar.xz
-  - tar -xJf twrp.tar.xz --directory $HOME/twrp/.repo && rm twrp.tar.xz
-  - cd $HOME/twrp && time repo sync -c -f -q --force-sync --no-clone-bundle --no-tags -j32 --local-only && rm -rf .repo
+  - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
 script:
-  - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git device/WALTON/Primo_RX5
+  - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp-test device/WALTON/Primo_RX5
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
