@@ -23,15 +23,15 @@ before_script:
   - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-dc754938ac0301298f20/PitchBlack-Recovery-master-norepo-20181001.tar.xz
     -O $HOME/twrp.tar.xz
   - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
+  - rm vendor/pb/pb_build.sh
+  - wget https://gist.githubusercontent.com/rokibhasansagar/81f8278671c12205e7d1a54776717899/raw/5a04578fb290baf4794a88eab0e580c70354476b/pb_build.sh -O vendor/pb/pb_build.sh
+  - chmod a+x vendor/pb/pb_build.sh
 script:
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp-test device/WALTON/Primo_RX5
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
     cd /home/cmbuild/twrp/
-    rm vendor/pb/pb_build.sh
-    wget -q https://gist.githubusercontent.com/rokibhasansagar/81f8278671c12205e7d1a54776717899/raw/5a04578fb290baf4794a88eab0e580c70354476b/pb_build.sh -O vendor/pb/pb_build.sh
-    chmod a+x vendor/pb/pb_build.sh
     source build/envsetup.sh && lunch omni_Primo_RX5-eng && mka recoveryimage
     exit
     EOF
