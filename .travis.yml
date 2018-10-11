@@ -30,7 +30,7 @@ script:
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
     cd /home/cmbuild/twrp/
-    source build/envsetup.sh && lunch omni_Primo_RX5-eng && mka recoveryimage
+    source build/envsetup.sh && lunch omni_Primo_RX5-eng && mka recoveryimage 1>/dev/null
     exit
     EOF
 after_success:
@@ -53,7 +53,6 @@ deploy:
 branches:
   only:
   - master
-  - stable
   except:
   - /^(?i:untagged)-.*$/
   - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
