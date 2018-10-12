@@ -27,7 +27,7 @@ script:
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp device/WALTON/Primo_RX5
   - rm vendor/pb/pb_build.sh
   - wget https://gist.githubusercontent.com/rokibhasansagar/81f8278671c12205e7d1a54776717899/raw/5a04578fb290baf4794a88eab0e580c70354476b/pb_build.sh -O vendor/pb/pb_build.sh
-  - chmod a+x twrp/vendor/pb/pb_build.sh
+  - chmod a+x vendor/pb/pb_build.sh
   - rm -rf bootable/recovery && git clone https://github.com/PitchBlack-Recovery/android_bootable_recovery -b PBRP --depth 1 bootable/recovery
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - |
