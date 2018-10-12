@@ -23,17 +23,17 @@ before_script:
   - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-dc754938ac0301298f20/PitchBlack-Recovery-master-norepo-20181001.tar.xz
     -O $HOME/twrp.tar.xz
   - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
-  - rm twrp/vendor/pb/pb_build.sh
-  - wget https://gist.githubusercontent.com/rokibhasansagar/81f8278671c12205e7d1a54776717899/raw/5a04578fb290baf4794a88eab0e580c70354476b/pb_build.sh -O twrp/vendor/pb/pb_build.sh
-  - chmod a+x twrp/vendor/pb/pb_build.sh
-  - sleep 5 && clear
 script:
-  - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp-test device/WALTON/Primo_RX5
+  - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp device/WALTON/Primo_RX5
+  - rm vendor/pb/pb_build.sh
+  - wget https://gist.githubusercontent.com/rokibhasansagar/81f8278671c12205e7d1a54776717899/raw/5a04578fb290baf4794a88eab0e580c70354476b/pb_build.sh -O vendor/pb/pb_build.sh
+  - chmod a+x twrp/vendor/pb/pb_build.sh
+  - rm -rf bootable/recovery && git clone https://github.com/PitchBlack-Recovery/android_bootable_recovery -b PBRP --depth 1 bootable/recovery
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
     cd /home/cmbuild/twrp/
-    source build/envsetup.sh && lunch omni_Primo_RX5-eng && mka recoveryimage
+    source build/envsetup.sh && lunch omni_Primo_RX5-eng && mka recoveryimage 1>/dev/null
     exit
     EOF
 after_success:
@@ -41,11 +41,6 @@ after_success:
   - cp out/target/product/Primo_RX5/PitchBlack-*.zip .
   - curl -s --upload-file PitchBlack-*.zip https://transfer.sh/ && echo ""
   - wput PitchBlack-*.zip ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//PBTWBuild-$(date +%Y%m%d-%H%M)/
-#after_failure:
-  #- cd $HOME/twrp/
-  #- cp out/target/product/Primo_RX5/PitchBlack-*.zip .
-  #- curl -s --upload-file PitchBlack-*.zip https://transfer.sh/ && echo ""
-  #- wput PitchBlack-*.zip ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//PBTWBuild-$(date +%Y%m%d-%H%M)/
 deploy:
   skip_cleanup: true
   provider: releases
@@ -56,11 +51,10 @@ deploy:
   on:
     tags: false
     repo: rokibhasansagar/android_device_twrp_WALTON_Primo_RX5
-    branch: master
+    branch: pbrp
 branches:
   only:
-  - master
-  - pbrp-test
+  - pbrp
   except:
   - /^(?i:untagged)-.*$/
   - /^v\d+\.\d+(\.\d+)?(-\S*)?$/

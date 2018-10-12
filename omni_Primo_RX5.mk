@@ -29,8 +29,6 @@ PRODUCT_MANUFACTURER := WALTON
 PRODUCT_COPY_FILES += \
     $(LOCAL_PATH)/recovery/root/etc/recovery.fstab:root/etc/recovery.fstab \
     $(LOCAL_PATH)/recovery/root/sbin/permissive.sh:root/sbin/permissive.sh \
-    #platform/bionic/libc/zoneinfo/tzdata:root/system/usr/share/zoneinfo/tzdata \
-    $(LOCAL_PATH)/recovery/root/res/keys:root/res/keys \
     $(LOCAL_PATH)/recovery/root/factory_init.project.rc:root/factory_init.project.rc \
     $(LOCAL_PATH)/recovery/root/factory_init.rc:root/factory_init.rc \
     $(LOCAL_PATH)/recovery/root/init.recovery.mt6735.rc:root/init.recovery.mt6735.rc \
