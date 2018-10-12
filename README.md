@@ -1,6 +1,6 @@
 ## Unofficial PitchBlack Recovery Device Tree for WALTON Primo RX5 :smirk:
 [![PBRP Project](https://img.shields.io/badge/PBRP%20Project-On%20Travis%20CI-green.svg)](#)
-[![Build Status](https://travis-ci.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.svg?branch=pbrp)](https://travis-ci.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5/tree/pbrp)
+[![Build Status](https://travis-ci.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.svg?branch=pbrp)](https://travis-ci.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5)
 
 The Mid-Range Priced Walton Primo RX5 (Primo_RX5 / gionee6735_65u_m0) Smartphone was released in Mid 2016 in Bangladesh. It is powered by MediaTek MT6735 chipset, 3 GB of RAM and 16 GB of internal storage.
 It runs on Gionee's Custom AmigoOS v3.2 based on Android OS v6.0 (Marshmallow).
@@ -19,8 +19,7 @@ It may not be Totally Working, :worried:
 But I will provide Tweaked Edition on the Releases.
   >- [x] Languages removed other than English,
   >- [x] Removed SuperSU and TWRP App Installation scripts,
-  >- [x] Added a Brand-New Deep-Purple Look in Theme,
-  >- [x] Extended support for Using other UI Themes from SDCard,
+  >- [x] Edited the Themes a little bit to Make the Recovery Image smaller,
   >- [x] A little more Optimized with Personal Care.
 
 So, Stay Tuned :wink:
