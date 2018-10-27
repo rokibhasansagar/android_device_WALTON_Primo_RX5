@@ -17,7 +17,7 @@ It runs on Gionee's Custom AmigoOS v3.2 based on Android OS v6.0 (Marshmallow).
 - [x] Edited the Themes a little bit to Make the Recovery Image smaller
 - [x] A little more Optimized with Personal Care
 
-### Check the [Releases](https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5/tree/untagged-0a1591617b557370cc8e) Section to Download the (Flashable) PitchBlack Recovery
+### Check the [Releases](https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5/releases/tag/untagged-0a1591617b557370cc8e) Section to Download the (Flashable) PitchBlack Recovery
 
 So, Stay Tuned :wink:
 
