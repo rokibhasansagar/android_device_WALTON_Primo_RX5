@@ -24,7 +24,9 @@ before_script:
     -O $HOME/twrp.tar.xz
   - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
 script:
-  - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp device/WALTON/Primo_RX5
+  - cd $HOME/twrp/
+  - git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp device/WALTON/Primo_RX5
+  - rm -rf recovery && git clone https://github.com/PitchBlackRecoveryProject/android_bootable_recovery recovery
   - rm vendor/pb/pb_build.sh
   - wget https://gist.githubusercontent.com/rokibhasansagar/81f8278671c12205e7d1a54776717899/raw/5a04578fb290baf4794a88eab0e580c70354476b/pb_build.sh -O vendor/pb/pb_build.sh
   - chmod a+x vendor/pb/pb_build.sh
