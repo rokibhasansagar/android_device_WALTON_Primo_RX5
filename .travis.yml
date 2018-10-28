@@ -20,7 +20,7 @@ before_install:
   - docker pull yshalsager/cyanogenmod:latest
 before_script:
   - cd $HOME && mkdir twrp
-  - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-dc754938ac0301298f20/PitchBlack-Recovery-master-norepo-20181001.tar.xz
+  - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-dc754938ac0301298f20/PitchBlackRecoveryProject-master-norepo-20181028.tar.xz
     -O $HOME/twrp.tar.xz
   - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
 script:
@@ -28,10 +28,13 @@ script:
   - rm vendor/pb/pb_build.sh
   - wget -q 'https://gist.githubusercontent.com/rokibhasansagar/81f8278671c12205e7d1a54776717899/raw/5a04578fb290baf4794a88eab0e580c70354476b/pb_build.sh' -O vendor/pb/pb_build.sh
   - chmod a+x vendor/pb/pb_build.sh
-  - cd bootable/recovery
-  - wget -q 'https://transfer.sh/get/MGUxu/PBRP_NewPatch.patch' && chmod a+x 'PBRP_NewPatch.patch'
-  - git apply 'PBRP_NewPatch.patch' && rm 'PBRP_NewPatch.patch'
-  - cd ../..
+  # If the android_bootable_recovery is Updated, Just Uncomment the bellow part...
+  #- git clone https://github.com/PitchBlackRecoveryProject/android_bootable_recovery -b PBRP updt && cd updt
+  #- git format-patch -k -s --binary --full-index "Use Newer Than >>> 4b26f4443400e9c803078f165dceacdad9624ff1 <<< inside the quote"~1..HEAD --stdout > ../bootable/recovery/PBRP_NewPatch.patch
+  #- cd bootable/recovery
+  #- git apply 'PBRP_NewPatch.patch' && cd ../..
+  #- rm -rf updt
+  # ...until this line
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
