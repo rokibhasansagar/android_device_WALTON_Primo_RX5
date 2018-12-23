@@ -20,13 +20,13 @@ before_install:
   - docker pull yshalsager/cyanogenmod:latest
 before_script:
   - cd $HOME && mkdir twrp
-  - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-dc754938ac0301298f20/PitchBlackRecoveryProject-master-norepo-20181028.tar.xz
+  - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-4456e70678f8d0971735/PitchBlackRecoveryProject-master-norepo-20181223.tar.xz
     -O $HOME/twrp.tar.xz
   - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
 script:
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp device/WALTON/Primo_RX5
   - rm vendor/pb/pb_build.sh
-  - wget -q 'https://gist.githubusercontent.com/rokibhasansagar/81f8278671c12205e7d1a54776717899/raw/5a04578fb290baf4794a88eab0e580c70354476b/pb_build.sh' -O vendor/pb/pb_build.sh
+  - wget -q 'https://gist.githubusercontent.com/rokibhasansagar/99eafe64e3a5c3ac2883aa559527c9fe/raw/4ce508d8da1432bdef6a6d32b737a0a9e450dd4e/pb_build.sh' -O vendor/pb/pb_build.sh
   - chmod a+x vendor/pb/pb_build.sh
   # If the android_bootable_recovery is Updated, Just Uncomment the bellow part...
   #- git clone https://github.com/PitchBlackRecoveryProject/android_bootable_recovery -b PBRP updt && cd updt
@@ -57,10 +57,10 @@ deploy:
   on:
     tags: false
     repo: rokibhasansagar/android_device_twrp_WALTON_Primo_RX5
-    branch: pbrp
+    branch: pbrp2
 branches:
   only:
-  - pbrp
+  - pbrp2
   except:
   - /^(?i:untagged)-.*$/
   - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
