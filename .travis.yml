@@ -24,7 +24,7 @@ before_script:
     -O $HOME/twrp.tar.xz
   - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
 script:
-  - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp device/WALTON/Primo_RX5
+  - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp2 device/WALTON/Primo_RX5
   - rm vendor/pb/pb_build.sh
   - wget -q 'https://gist.githubusercontent.com/rokibhasansagar/99eafe64e3a5c3ac2883aa559527c9fe/raw/4ce508d8da1432bdef6a6d32b737a0a9e450dd4e/pb_build.sh' -O vendor/pb/pb_build.sh
   - chmod a+x vendor/pb/pb_build.sh
