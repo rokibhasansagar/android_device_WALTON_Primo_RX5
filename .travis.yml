@@ -28,6 +28,7 @@ script:
   - rm vendor/pb/pb_build.sh
   - wget -q 'https://gist.githubusercontent.com/rokibhasansagar/99eafe64e3a5c3ac2883aa559527c9fe/raw/4ce508d8da1432bdef6a6d32b737a0a9e450dd4e/pb_build.sh' -O vendor/pb/pb_build.sh
   - chmod a+x vendor/pb/pb_build.sh
+  - cd bootable/recovery/ && git revert --no-edit 465b9c2297c67fb6293e59acd79ddd1ba51e8e1b && cd ../../
   # If the android_bootable_recovery is Updated, Just Uncomment the bellow part...
   #- git clone https://github.com/PitchBlackRecoveryProject/android_bootable_recovery -b PBRP updt && cd updt
   #- git format-patch -k -s --binary --full-index "Use Newer Than >>> 4b26f4443400e9c803078f165dceacdad9624ff1 <<< inside the quote"~1..HEAD --stdout > ../bootable/recovery/PBRP_NewPatch.patch
