@@ -9,6 +9,7 @@ addons:
     - true
     packages:
     - wput
+    - pxz
 env:
   global:
     - secure: "RmEoHQxoRB3dDrogDq7SSpJFN6wImrtfFUadNzOaYK8+ly7KJmgbzkEAPjKcx+t1FQia8g73iPsDsHQbRRkJw6Ws/iTJ1Cr62rGZJIe9QOfRRtMudoqZw8L/T2kXjFR6helKqLpktScC9J2bYk102HACBeF3fkqwvAXJarHgvRc0Ltw+snXW5qa4iAqgLbgyQm5Vmd5pG/C5ck9hjpj8qBnIEBvcaYRLBRsClv1CONd5uRRQl+NjIKj+Y3yr8pGuL5XYfkgKJjBz1Gv3mUNTtSn5rSnUx2Wa4evswxz+YEVzYrqqTS692zFHgUrL3PNYAO1arIjJACK/7cB28mFNhRZt4LkDMJGC4x7+leqJkm1CT3WnFCtarXqCFb3+Vc7Dex2p9q1oCURvBi9PKVakllqLJEUif9lkAGGxqt9mldDaC4jSYSU9LVbQjYqUl9ngAHNgX1G2L5rasiD0YGuLBg1cvhasHOep91PhRVItb46ZobNFBGWWd4WzldCKUDscgNYRKPfNaQrAzga3nXah4pcaDoUolOWIj6VYskPuf5eFWNwrNnbYN4JNwNRmCkyQpAwN2NqqHB8oVvzDFHgdgP1LEN6rlGNMNRMyR3+zoJeGLftsI2GXw9thcTWvhO6Lvia+CgsSx7N+yMkrgEKK4Z0lyQROyA41u9yODDGlGqo="
@@ -36,8 +37,11 @@ script:
 after_success:
   - export version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d '"' -f2)
   - cp $HOME/twrp/out/target/product/Primo_RX5/recovery.img $HOME/twrp/TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img
+  - cd $HOME/twrp/out/target/product/Primo_RX5/system/ && ls -la
+  - tar -I pxz -cf $HOME/twrp/extra-system-files.tar.xz *
   - cd $HOME/twrp/
   - curl -s --upload-file TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img https://transfer.sh/ && echo ""
+  - curl -s --upload-file extra-system-files.tar.xz https://transfer.sh/ && echo ""
   - wput TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$(date +%Y%m%d-%H%M)/
 deploy:
   skip_cleanup: true
