@@ -30,18 +30,19 @@ script:
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
+    sudo apt-get update -qqy && sudo apt-get upgrade -qqy
     cd /home/cmbuild/twrp/
     source build/envsetup.sh && lunch omni_Primo_RX5-eng && mka recoveryimage 1>/dev/null
     exit
     EOF
 after_success:
   - export version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d '"' -f2)
-  - cp $HOME/twrp/out/target/product/Primo_RX5/recovery.img $HOME/twrp/TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img
+  - cp $HOME/twrp/out/target/product/Primo_RX5/recovery.img $HOME/twrp/TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial2.img
   - cd $HOME/twrp/out/target/product/Primo_RX5/system/ && ls -la
   - tar -I pxz -cf $HOME/twrp/extra-system-files-$(date +"%Y%m%d").tar.xz *
   - cd $HOME/twrp/
-  - wput TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$(date +%Y%m%d-%H%M)/
-  - wput extra-system-files-$(date +"%Y%m%d").tar.xz ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$(date +%Y%m%d-%H%M)/
+  - wput TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial2.img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$(date +%Y%m%d-%H%M)/Unofficial2/
+  - wput extra-system-files-$(date +"%Y%m%d").tar.xz ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$(date +%Y%m%d-%H%M)/Unofficial2/
 deploy:
   skip_cleanup: true
   provider: releases
