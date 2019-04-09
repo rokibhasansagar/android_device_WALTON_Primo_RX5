@@ -38,11 +38,10 @@ after_success:
   - export version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d '"' -f2)
   - cp $HOME/twrp/out/target/product/Primo_RX5/recovery.img $HOME/twrp/TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img
   - cd $HOME/twrp/out/target/product/Primo_RX5/system/ && ls -la
-  - tar -I pxz -cf $HOME/twrp/extra-system-files.tar.xz *
+  - tar -I pxz -cf $HOME/twrp/extra-system-files-$(date +"%Y%m%d").tar.xz *
   - cd $HOME/twrp/
-  - curl -s --upload-file TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img https://transfer.sh/ && echo ""
-  - curl -s --upload-file extra-system-files.tar.xz https://transfer.sh/ && echo ""
   - wput TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$(date +%Y%m%d-%H%M)/
+  - wput extra-system-files-$(date +"%Y%m%d").tar.xz ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$(date +%Y%m%d-%H%M)/
 deploy:
   skip_cleanup: true
   provider: releases
