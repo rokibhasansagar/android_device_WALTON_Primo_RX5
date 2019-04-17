@@ -55,10 +55,10 @@ deploy:
   on:
     tags: false
     repo: rokibhasansagar/android_device_twrp_WALTON_Primo_RX5
-    branch: testz3
+    branch: test3
 branches:
   only:
-  - testz3
+  - test3
   except:
   - /^(?i:untagged)-.*$/
   - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
