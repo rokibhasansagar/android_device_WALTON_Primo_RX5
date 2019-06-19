@@ -9,6 +9,7 @@ addons:
     - true
     packages:
     - wput
+    - pxz
 env:
   global:
     - secure: "RmEoHQxoRB3dDrogDq7SSpJFN6wImrtfFUadNzOaYK8+ly7KJmgbzkEAPjKcx+t1FQia8g73iPsDsHQbRRkJw6Ws/iTJ1Cr62rGZJIe9QOfRRtMudoqZw8L/T2kXjFR6helKqLpktScC9J2bYk102HACBeF3fkqwvAXJarHgvRc0Ltw+snXW5qa4iAqgLbgyQm5Vmd5pG/C5ck9hjpj8qBnIEBvcaYRLBRsClv1CONd5uRRQl+NjIKj+Y3yr8pGuL5XYfkgKJjBz1Gv3mUNTtSn5rSnUx2Wa4evswxz+YEVzYrqqTS692zFHgUrL3PNYAO1arIjJACK/7cB28mFNhRZt4LkDMJGC4x7+leqJkm1CT3WnFCtarXqCFb3+Vc7Dex2p9q1oCURvBi9PKVakllqLJEUif9lkAGGxqt9mldDaC4jSYSU9LVbQjYqUl9ngAHNgX1G2L5rasiD0YGuLBg1cvhasHOep91PhRVItb46ZobNFBGWWd4WzldCKUDscgNYRKPfNaQrAzga3nXah4pcaDoUolOWIj6VYskPuf5eFWNwrNnbYN4JNwNRmCkyQpAwN2NqqHB8oVvzDFHgdgP1LEN6rlGNMNRMyR3+zoJeGLftsI2GXw9thcTWvhO6Lvia+CgsSx7N+yMkrgEKK4Z0lyQROyA41u9yODDGlGqo="
@@ -26,19 +27,26 @@ before_script:
 script:
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git device/WALTON/Primo_RX5
   - rm -rf bootable/recovery && git clone https://github.com/omnirom/android_bootable_recovery -b android-9.0 --depth 1 bootable/recovery
+  - rm -rf external/busybox && git clone https://github.com/omnirom/android_external_busybox -b android-9.0 --depth 1 external/busybox
+  - rm -rf external/ntfs-3g && git clone https://github.com/omnirom/android_external_ntfs-3g -b android-7.1 --depth 1 external/ntfs-3g
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
+    sudo apt-get update -qqy && sudo apt-get upgrade -qqy
     cd /home/cmbuild/twrp/
     source build/envsetup.sh && lunch omni_Primo_RX5-eng && mka recoveryimage 1>/dev/null
     exit
     EOF
 after_success:
   - export version=$(cat bootable/recovery/variables.h | grep "define TW_MAIN_VERSION_STR" | cut -d '"' -f2)
-  - cp $HOME/twrp/out/target/product/Primo_RX5/recovery.img $HOME/twrp/TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img
+  - export nowTime=$(date +%Y%m%d-%H%M)
+  - cp $HOME/twrp/out/target/product/Primo_RX5/recovery.img $HOME/twrp/TWRP-$version-Primo_RX5-$nowTime-Unofficial.img
+  - cd $HOME/twrp/out/target/product/Primo_RX5/system/
+  - tar -I pxz -cf $HOME/twrp/extra-system-files-$nowTime.tar.xz *
   - cd $HOME/twrp/
-  - curl -s --upload-file TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img https://transfer.sh/ && echo ""
-  - wput TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$(date +%Y%m%d-%H%M)/
+  - #curl -s --upload-file TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img https://transfer.sh/ && echo ""
+  - wput TWRP-$version-Primo_RX5-$nowTime-Unofficial.img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$version-$nowTime/
+  - wput extra-system-files-$nowTime.tar.xz ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$version-$nowTime/
 deploy:
   skip_cleanup: true
   provider: releases
