@@ -27,13 +27,15 @@ before_script:
 script:
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp2 device/WALTON/Primo_RX5
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
+  - rm -rf bootable/recovery && git clone https://github.com/PitchBlackRecoveryProject/android_bootable_recovery -b features bootable/recovery
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
-    sudo apt-get -y update && sudo apt-get -y upgrade
+    set -eo
+    sudo apt-get -qy update && sudo apt-get -qy upgrade
     cd /home/cmbuild/twrp/
     source build/envsetup.sh
     lunch omni_Primo_RX5-eng
-    mka recoveryimage 1>/dev/null
+    make -j16 recoveryimage 1>/dev/null
     exit
     EOF
 after_success:
