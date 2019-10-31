@@ -19,7 +19,7 @@ services:
 before_install:
   - docker pull yshalsager/cyanogenmod:latest
 before_script:
-  - sudo apt-get -qqy update && sudo apt-get --qqy upgrade 1>/dev/null
+  - sudo apt-get -qqy update && sudo apt-get -qqy upgrade 1>/dev/null
   - cd $HOME && mkdir twrp
   - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-274084d99841b6134a78/PitchBlackRecoveryProject-master-norepo-20191010.tar.xz
     -O $HOME/twrp.tar.xz
@@ -29,7 +29,7 @@ script:
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
-    sudo apt-get -qqy update && sudo apt-get --qqy upgrade 1>/dev/null
+    sudo apt-get -qqy update && sudo apt-get -qqy upgrade 1>/dev/null
     cd /home/cmbuild/twrp/
     source build/envsetup.sh
     lunch omni_Primo_RX5-eng
