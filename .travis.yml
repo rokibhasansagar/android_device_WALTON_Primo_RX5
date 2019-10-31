@@ -30,7 +30,8 @@ before_script:
 script:
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp2 device/WALTON/Primo_RX5
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
-  - rm -rf bootable/recovery && git clone https://github.com/PitchBlackRecoveryProject/android_bootable_recovery -b features bootable/recovery
+  - rm -rf bootable/recovery && git clone https://github.com/PitchBlackRecoveryProject/android_bootable_recovery -b features --single-branch bootable/recovery
+  - cd bootable/recovery && wget -q https://gist.github.com/rokibhasansagar/407ceb5afa3ac4c7d09e6865c33bddf6/raw/5d0f9e1da73246c00ca6265880680096edc95dc1/e2fs-progs_fix.patch && chmod +x *.patch && git apply *.patch && rm rf *.patch && cd ../..
   - git clone https://github.com/PitchBlackRecoveryProject/external_magisk-prebuilt external/magisk-prebuilt
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
