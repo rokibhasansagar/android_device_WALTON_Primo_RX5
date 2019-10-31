@@ -1,5 +1,6 @@
 os: linux
 dist: xenial
+language: minimal
 sudo: required
 git:
   depth: 3
@@ -19,12 +20,13 @@ services:
 before_install:
   - docker pull yshalsager/cyanogenmod:latest
 before_script:
-  - sudo apt-get -qqy update && sudo apt-get -qqy upgrade 1>/dev/null
   - cd $HOME && mkdir twrp
   - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-274084d99841b6134a78/PitchBlackRecoveryProject-master-norepo-20191010.tar.xz
     -O $HOME/twrp.tar.xz
   - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
 script:
+  - apt-get -y update 1>/dev/null
+  - apt-get -y upgrade 1>/dev/null
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp2 device/WALTON/Primo_RX5
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - |
