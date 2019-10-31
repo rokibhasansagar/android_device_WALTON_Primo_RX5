@@ -19,31 +19,21 @@ services:
 before_install:
   - docker pull yshalsager/cyanogenmod:latest
 before_script:
+  - sudo apt-get -qqy update && sudo apt-get --qqy upgrade 1>/dev/null
   - cd $HOME && mkdir twrp
-  - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-4456e70678f8d0971735/PitchBlackRecoveryProject-master-norepo-20181223.tar.xz
+  - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-274084d99841b6134a78/PitchBlackRecoveryProject-master-norepo-20191010.tar.xz
     -O $HOME/twrp.tar.xz
   - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
 script:
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp2 device/WALTON/Primo_RX5
-  - rm vendor/pb/pb_build.sh
-  - wget -q 'https://gist.githubusercontent.com/rokibhasansagar/99eafe64e3a5c3ac2883aa559527c9fe/raw/4ce508d8da1432bdef6a6d32b737a0a9e450dd4e/pb_build.sh' -O vendor/pb/pb_build.sh
-  - chmod a+x vendor/pb/pb_build.sh
-  - cd bootable/recovery/
-  - wget -q 'https://transfer.sh/get/MumWb/efs2_fix.patch'
-  - git apply 'efs2_fix.patch'
-  - rm -f 'efs2_fix.patch' && cd ../../
-  # If the android_bootable_recovery is Updated, Just Uncomment the bellow part...
-  #- git clone https://github.com/PitchBlackRecoveryProject/android_bootable_recovery -b PBRP updt && cd updt
-  #- git format-patch -k -s --binary --full-index "Use Newer Than >>> 4b26f4443400e9c803078f165dceacdad9624ff1 <<< inside the quote"~1..HEAD --stdout > ../bootable/recovery/PBRP_NewPatch.patch
-  #- cd bootable/recovery
-  #- git apply 'PBRP_NewPatch.patch' && cd ../..
-  #- rm -rf updt
-  # ...until this line
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
+    sudo apt-get -qqy update && sudo apt-get --qqy upgrade 1>/dev/null
     cd /home/cmbuild/twrp/
-    source build/envsetup.sh && lunch omni_Primo_RX5-eng && mka recoveryimage 1>/dev/null
+    source build/envsetup.sh
+    lunch omni_Primo_RX5-eng
+    mka recoveryimage 1>/dev/null
     exit
     EOF
 after_success:
@@ -60,8 +50,6 @@ deploy:
   file: $HOME/twrp/PitchBlack-*.zip
   on:
     tags: false
-    repo: rokibhasansagar/android_device_twrp_WALTON_Primo_RX5
-    branch: pbrp2
 branches:
   only:
   - pbrp2
