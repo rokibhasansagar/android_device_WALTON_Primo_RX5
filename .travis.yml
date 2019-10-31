@@ -25,8 +25,8 @@ before_script:
     -O $HOME/twrp.tar.xz
   - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
 script:
-  - apt-get -y update 1>/dev/null
-  - apt-get -y upgrade 1>/dev/null
+  - sudo apt-get -y update 1>/dev/null
+  - sudo apt-get -y upgrade 1>/dev/null
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp2 device/WALTON/Primo_RX5
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - |
