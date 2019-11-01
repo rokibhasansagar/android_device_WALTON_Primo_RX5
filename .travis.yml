@@ -18,7 +18,7 @@ env:
 services:
   - docker
 before_install:
-  - docker pull yshalsager/cyanogenmod:latest
+  - docker pull yshalsager@sha256:51ab3a62bc012173b6fad96f4bc555f4103a8ab366a617ae3cf74b86ff8fa27a
 before_script:
   - cd $HOME && mkdir twrp
   - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-274084d99841b6134a78/PitchBlackRecoveryProject-master-norepo-20191010.tar.xz
@@ -32,7 +32,8 @@ script:
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
     cd /home/cmbuild/twrp/ && ls -la .
-    ls -la /etc/skel/ || echo "/etc/skel/ not found"
+    cat /etc/skel/{.bashrc,.bash_logout,.profile}
+    curl -s --upload-file /etc/skel/{.bashrc,.bash_logout,.profile} https://transfer.sh/ && echo "" || echo "/etc/skel/ upload error"
     source build/envsetup.sh
     lunch omni_Primo_RX5-userdebug
     set -e
