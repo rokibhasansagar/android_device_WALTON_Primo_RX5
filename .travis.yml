@@ -18,7 +18,7 @@ env:
 services:
   - docker
 before_install:
-  - docker pull yshalsager/cyanogenmod:latest
+  - docker pull fr3akyphantom/bionic-droid-builder:latest
 before_script:
   - cd $HOME && mkdir twrp
   - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-274084d99841b6134a78/PitchBlackRecoveryProject-master-norepo-20191010.tar.xz
@@ -30,8 +30,8 @@ script:
   - rm -rf bootable/recovery && git clone https://github.com/rokibhasansagar/android_bootable_recovery -b features-patch-2 --single-branch bootable/recovery
   - git clone https://github.com/PitchBlackRecoveryProject/external_magisk-prebuilt external/magisk-prebuilt
   - |
-    docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
-    cd /home/cmbuild/twrp/ && ls -la .
+    docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/builder/android/:rw,z" fr3akyphantom/bionic-droid-builder bash << EOF
+    cd /home/builder/android/ && ls -la .
     source build/envsetup.sh
     lunch omni_Primo_RX5-userdebug
     set -e
