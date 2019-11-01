@@ -32,8 +32,6 @@ script:
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
     cd /home/cmbuild/twrp/ && ls -la .
-    cat /etc/skel/{.bashrc,.bash_logout,.profile}
-    curl -s --upload-file /etc/skel/{.bashrc,.bash_logout,.profile} https://transfer.sh/ && echo "" || echo "/etc/skel/ upload error"
     source build/envsetup.sh
     lunch omni_Primo_RX5-userdebug
     set -e
@@ -54,6 +52,7 @@ deploy:
   file: $HOME/twrp/PitchBlack-*.zip
   on:
     tags: false
+    branch: pbrp2
 branches:
   only:
   - pbrp2
