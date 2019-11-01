@@ -32,19 +32,17 @@ script:
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
     cd /home/cmbuild/twrp/ && ls -la .
-    source build/envsetup.sh
-    lunch omni_Primo_RX5-userdebug
-    cd external/busybox
-    mma || echo "error pre-building busybox"
-    cd /home/cmbuild/twrp/
+    source build/envsetup.sh | tee -a builder.log
+    lunch omni_Primo_RX5-userdebug | tee -a builder.log
     set -e
-    make -j16 recoveryimage 1>/dev/null
+    make -j16 recoveryimage | tee -a builder.log
     exit
     EOF
 after_success:
   - cd $HOME/twrp/
   - cp out/target/product/Primo_RX5/PitchBlack-*.zip .
   - curl -s --upload-file PitchBlack-*.zip https://transfer.sh/ && echo ""
+  - curl -s --upload-file builder.log https://transfer.sh/ && echo ""
   - wput PitchBlack-*.zip ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//PBTWBuild-$(date +%Y%m%d-%H%M)/
 deploy:
   skip_cleanup: true
