@@ -34,6 +34,9 @@ script:
     cd /home/cmbuild/twrp/ && ls -la .
     source build/envsetup.sh
     lunch omni_Primo_RX5-userdebug
+    cd external/busybox
+    mma || echo "error pre-building busybox"
+    cd /home/cmbuild/twrp/
     set -e
     make -j16 recoveryimage 1>/dev/null
     exit
