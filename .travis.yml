@@ -24,16 +24,14 @@ before_script:
   - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-274084d99841b6134a78/PitchBlackRecoveryProject-master-norepo-20191010.tar.xz
     -O $HOME/twrp.tar.xz
   - tar -xJf twrp.tar.xz --directory $HOME/twrp/ && rm twrp.tar.xz
-  - ccache -s
   - export USE_CCACHE=1
   - export CCACHE_COMPRESS=1
   - export CCACHE_COMPRESSLEVEL=8
-  - ccache -M 10G
-  - ccache -s
+  - ccache -M 2G
 script:
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp2 device/WALTON/Primo_RX5
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
-  - rm -rf bootable/recovery && git clone https://github.com/rokibhasansagar/android_bootable_recovery -b feature-patch-2 --single-branch bootable/recovery
+  - rm -rf bootable/recovery && git clone https://github.com/rokibhasansagar/android_bootable_recovery -b features-patch-2 --single-branch bootable/recovery
   - git clone https://github.com/PitchBlackRecoveryProject/external_magisk-prebuilt external/magisk-prebuilt
   - |
     docker run --privileged --rm -i \
