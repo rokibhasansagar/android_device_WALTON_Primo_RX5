@@ -30,7 +30,7 @@ script:
   - rm -rf bootable/recovery && git clone https://github.com/rokibhasansagar/android_bootable_recovery -b features-patch-2 --single-branch bootable/recovery
   - git clone https://github.com/PitchBlackRecoveryProject/external_magisk-prebuilt external/magisk-prebuilt
   - |
-    docker run --rm -it \
+    docker run --privileged --rm -i \
       -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) \
       -v "$(pwd):/home/builder/pitchblack/:rw,z" \
       -v "/home/$USER/.ccache:/srv/ccache" \
