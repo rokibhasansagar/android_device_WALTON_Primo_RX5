@@ -36,7 +36,7 @@ script:
   - |
     docker run --privileged --rm -i \
       -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) \
-      -v "$(pwd):/home/builder/:rw,z" \
+      -v "$(pwd):/home/builder/pitchblack/:rw,z" \
       fr3akyphantom/pitchblack-builder:latest \
       bash << EOF
     echo $(pwd) && ls -la .
