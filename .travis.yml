@@ -27,7 +27,7 @@ before_script:
 script:
   - cd $HOME/twrp/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp2 device/WALTON/Primo_RX5
   - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
-  - rm -rf bootable/recovery && git clone https://github.com/rokibhasansagar/android_bootable_recovery -b features-patch-2 --single-branch bootable/recovery
+  - rm -rf bootable/recovery && git clone https://github.com/PitchBlackRecoveryProject/android_bootable_recovery -b android-9.0 --single-branch bootable/recovery
   - git clone https://github.com/PitchBlackRecoveryProject/external_magisk-prebuilt external/magisk-prebuilt
   - |
     docker run --rm -i \
