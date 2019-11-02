@@ -30,11 +30,11 @@ script:
   - rm -rf bootable/recovery && git clone https://github.com/rokibhasansagar/android_bootable_recovery -b features-patch-2 --single-branch bootable/recovery
   - git clone https://github.com/PitchBlackRecoveryProject/external_magisk-prebuilt external/magisk-prebuilt
   - |
-    docker run --privileged --rm -it
-      -e USER_ID=$(id -u) -e GROUP_ID=$(id -g)
-      -v "$(pwd):/home/builder/pitchblack/:rw,z"
-      -v "/home/$USER/.ccache:/srv/ccache"
-      fr3akyphantom/pitchblack-builder:latest
+    docker run --privileged --rm -it \
+      -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) \
+      -v "$(pwd):/home/builder/pitchblack/:rw,z" \
+      -v "/home/$USER/.ccache:/srv/ccache" \
+      fr3akyphantom/pitchblack-builder:latest \
       /bin/bash << EOF
     cd /home/builder/pitchblack/ && ls -la .
     source build/envsetup.sh
