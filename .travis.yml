@@ -30,13 +30,13 @@ script:
   - rm -rf bootable/recovery && git clone https://github.com/PitchBlackRecoveryProject/android_bootable_recovery -b android-9.0 --single-branch bootable/recovery
   - git clone https://github.com/PitchBlackRecoveryProject/external_magisk-prebuilt external/magisk-prebuilt
   - |
-    docker run --privileged --rm -i \
+    docker run --rm -i \
       -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) \
       -v "$(pwd):/home/builder/pitchblack/:rw,z" \
       -v "/home/$USER/.ccache:/srv/ccache" \
       fr3akyphantom/pitchblack-builder:latest \
-      /bin/bash << EOF
-    cd /home/builder/pitchblack/ && ls -la .
+      bash << EOF
+    cd /home/builder/pitchblack/ && echo $(pwd) && ls -la .
     source build/envsetup.sh
     lunch omni_Primo_RX5-userdebug
     set -e
