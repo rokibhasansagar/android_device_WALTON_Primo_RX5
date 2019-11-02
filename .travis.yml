@@ -36,11 +36,11 @@ script:
   - |
     docker run --privileged --rm -i \
       -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) \
-      -v "$(pwd):/home/builder/pitchblack/:rw,z" \
+      -v "$(pwd):/home/builder/:rw,z" \
       fr3akyphantom/pitchblack-builder:latest \
       bash << EOF
     echo $(pwd) && ls -la .
-    cd /home/builder/pitchblack/
+    cd /home/builder/
     echo $(pwd) && ls -la .
     source build/envsetup.sh
     lunch omni_Primo_RX5-userdebug
