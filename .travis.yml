@@ -30,8 +30,13 @@ script:
   - rm -rf bootable/recovery && git clone https://github.com/rokibhasansagar/android_bootable_recovery -b features-patch-2 --single-branch bootable/recovery
   - git clone https://github.com/PitchBlackRecoveryProject/external_magisk-prebuilt external/magisk-prebuilt
   - |
-    docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/builder/android/:rw,z" fr3akyphantom/bionic-droid-builder bash << EOF
-    cd /home/builder/android/ && ls -la .
+    docker run --privileged --rm -it
+      -e USER_ID=$(id -u) -e GROUP_ID=$(id -g)
+      -v "$(pwd):/home/builder/pitchblack/:rw,z"
+      -v "/home/$USER/.ccache:/srv/ccache"
+      fr3akyphantom/pitchblack-builder:latest
+      /bin/bash << EOF
+    cd /home/builder/pitchblack/ && ls -la .
     source build/envsetup.sh
     lunch omni_Primo_RX5-userdebug
     set -e
@@ -52,10 +57,10 @@ deploy:
   file: $HOME/twrp/PitchBlack-*.zip
   on:
     tags: false
-    branch: pbrp2
+    branch: pbrp3
 branches:
   only:
-  - pbrp2
+  - pbrp3
   except:
   - /^(?i:untagged)-.*$/
   - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
