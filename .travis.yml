@@ -10,6 +10,7 @@ addons:
     - true
     packages:
     - ccache
+    - tree
 env:
   global:
     - secure: "RmEoHQxoRB3dDrogDq7SSpJFN6wImrtfFUadNzOaYK8+ly7KJmgbzkEAPjKcx+t1FQia8g73iPsDsHQbRRkJw6Ws/iTJ1Cr62rGZJIe9QOfRRtMudoqZw8L/T2kXjFR6helKqLpktScC9J2bYk102HACBeF3fkqwvAXJarHgvRc0Ltw+snXW5qa4iAqgLbgyQm5Vmd5pG/C5ck9hjpj8qBnIEBvcaYRLBRsClv1CONd5uRRQl+NjIKj+Y3yr8pGuL5XYfkgKJjBz1Gv3mUNTtSn5rSnUx2Wa4evswxz+YEVzYrqqTS692zFHgUrL3PNYAO1arIjJACK/7cB28mFNhRZt4LkDMJGC4x7+leqJkm1CT3WnFCtarXqCFb3+Vc7Dex2p9q1oCURvBi9PKVakllqLJEUif9lkAGGxqt9mldDaC4jSYSU9LVbQjYqUl9ngAHNgX1G2L5rasiD0YGuLBg1cvhasHOep91PhRVItb46ZobNFBGWWd4WzldCKUDscgNYRKPfNaQrAzga3nXah4pcaDoUolOWIj6VYskPuf5eFWNwrNnbYN4JNwNRmCkyQpAwN2NqqHB8oVvzDFHgdgP1LEN6rlGNMNRMyR3+zoJeGLftsI2GXw9thcTWvhO6Lvia+CgsSx7N+yMkrgEKK4Z0lyQROyA41u9yODDGlGqo="
@@ -36,12 +37,12 @@ script:
   - |
     docker run --privileged --rm -i \
       -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) \
-      -v "$(pwd):/home/builder/:rw,z" \
+      -v "$HOME:/home/builder/:rw,z" \
       fr3akyphantom/pitchblack-builder:latest \
       bash << EOF
     echo $(pwd) && ls -la .
-    cd /home/builder/
-    echo $(pwd) && ls -la .
+    cd /home/builder/pitchblack/
+    tree -a -f -L 2 || echo "tree" error" 
     source build/envsetup.sh
     lunch omni_Primo_RX5-userdebug
     set -e
