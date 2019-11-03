@@ -9,7 +9,6 @@ addons:
     update:
     - true
     packages:
-    - ccache
     - tree
 env:
   global:
@@ -35,7 +34,7 @@ script:
   - rm -rf bootable/recovery && git clone https://github.com/rokibhasansagar/android_bootable_recovery -b features-patch-2 --single-branch bootable/recovery
   - git clone https://github.com/PitchBlackRecoveryProject/external_magisk-prebuilt external/magisk-prebuilt
   - |
-    docker run --privileged --rm -it \
+    docker run --privileged --rm -i \
       -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) \
       -v "$HOME:/home/builder/:rw,z" \
       -v "$HOME/.ccache:/srv/ccache" \
