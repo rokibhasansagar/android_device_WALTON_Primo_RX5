@@ -21,7 +21,7 @@ services:
 before_install:
   - docker pull fr3akyphantom/pitchblack-builder:latest
 before_script:
-  - cd $HOME && mkdir pitchblack
+  - cd $HOME && tree -a -L 2 && mkdir pitchblack
   - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-274084d99841b6134a78/PitchBlackRecoveryProject-master-norepo-20191010.tar.xz
     -O $HOME/pitchblack.tar.xz
   - tar -xJf pitchblack.tar.xz --directory $HOME/pitchblack/ && rm pitchblack.tar.xz
@@ -40,9 +40,9 @@ script:
       -v "$HOME:/home/builder/:rw,z" \
       fr3akyphantom/pitchblack-builder:latest \
       bash << EOF
-    echo $(pwd) && ls -la .
+    echo $(pwd) && tree -a -L 2
     cd /home/builder/pitchblack/
-    tree -a -f -L 2 || echo "tree" error" 
+    tree -a -f -L 2 || echo "tree error" 
     source build/envsetup.sh
     lunch omni_Primo_RX5-userdebug
     set -e
