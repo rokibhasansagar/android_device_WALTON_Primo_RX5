@@ -40,6 +40,7 @@ script:
       -v "$HOME:/home/builder/:rw,z" \
       fr3akyphantom/pitchblack-builder:latest \
       bash << EOF
+    apt-get update -qqy && apt-get install tree -qy
     echo $(pwd) && tree -a -L 2
     cd /home/builder/pitchblack/
     tree -a -f -L 2 || echo "tree error" 
