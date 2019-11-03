@@ -35,13 +35,13 @@ script:
   - rm -rf bootable/recovery && git clone https://github.com/rokibhasansagar/android_bootable_recovery -b features-patch-2 --single-branch bootable/recovery
   - git clone https://github.com/PitchBlackRecoveryProject/external_magisk-prebuilt external/magisk-prebuilt
   - |
-    docker run --privileged --rm -i \
+    docker run --privileged --rm -it \
       -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) \
       -v "$HOME:/home/builder/:rw,z" \
+      -v "$HOME/.ccache:/srv/ccache" \
       fr3akyphantom/pitchblack-builder:latest \
       bash << EOF
     apt-get update -qqy && apt-get install tree -qy
-    echo $(pwd) && tree -a -L 2
     cd /home/builder/pitchblack/
     tree -a -f -L 2 || echo "tree error" 
     source build/envsetup.sh
