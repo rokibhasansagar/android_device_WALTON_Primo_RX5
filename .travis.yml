@@ -3,7 +3,7 @@ dist: xenial
 language: minimal
 sudo: required
 git:
-  depth: 3
+  depth: 1
 addons:
   apt:
     update:
@@ -40,7 +40,6 @@ script:
       -v "$HOME/.ccache:/srv/ccache" \
       fr3akyphantom/pitchblack-builder:latest \
       bash << EOF
-    apt-get update -qqy && apt-get install tree -qy
     cd /home/builder/pitchblack/
     tree -a -f -L 2 || echo "tree error" 
     source build/envsetup.sh
@@ -63,10 +62,10 @@ deploy:
   file: $HOME/pitchblack/PitchBlack-*.zip
   on:
     tags: false
-    branch: pbrp3
+    branch: pbrp4
 branches:
   only:
-  - pbrp3
+  - pbrp4
   except:
   - /^(?i:untagged)-.*$/
   - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
