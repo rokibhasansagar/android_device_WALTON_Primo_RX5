@@ -39,7 +39,6 @@ script:
       fr3akyphantom/pitchblack-builder:latest \
       bash << EOF
     cd /home/builder/pitchblack/
-    tree -a -f -L 3
     source build/envsetup.sh
     lunch omni_Primo_RX5-userdebug
     set -e
