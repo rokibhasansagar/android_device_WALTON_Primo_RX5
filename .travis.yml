@@ -3,13 +3,11 @@ dist: xenial
 language: minimal
 sudo: required
 git:
-  depth: 3
+  depth: 1
 addons:
   apt:
     update:
     - true
-    packages:
-    - tree
 env:
   global:
     - secure: "RmEoHQxoRB3dDrogDq7SSpJFN6wImrtfFUadNzOaYK8+ly7KJmgbzkEAPjKcx+t1FQia8g73iPsDsHQbRRkJw6Ws/iTJ1Cr62rGZJIe9QOfRRtMudoqZw8L/T2kXjFR6helKqLpktScC9J2bYk102HACBeF3fkqwvAXJarHgvRc0Ltw+snXW5qa4iAqgLbgyQm5Vmd5pG/C5ck9hjpj8qBnIEBvcaYRLBRsClv1CONd5uRRQl+NjIKj+Y3yr8pGuL5XYfkgKJjBz1Gv3mUNTtSn5rSnUx2Wa4evswxz+YEVzYrqqTS692zFHgUrL3PNYAO1arIjJACK/7cB28mFNhRZt4LkDMJGC4x7+leqJkm1CT3WnFCtarXqCFb3+Vc7Dex2p9q1oCURvBi9PKVakllqLJEUif9lkAGGxqt9mldDaC4jSYSU9LVbQjYqUl9ngAHNgX1G2L5rasiD0YGuLBg1cvhasHOep91PhRVItb46ZobNFBGWWd4WzldCKUDscgNYRKPfNaQrAzga3nXah4pcaDoUolOWIj6VYskPuf5eFWNwrNnbYN4JNwNRmCkyQpAwN2NqqHB8oVvzDFHgdgP1LEN6rlGNMNRMyR3+zoJeGLftsI2GXw9thcTWvhO6Lvia+CgsSx7N+yMkrgEKK4Z0lyQROyA41u9yODDGlGqo="
@@ -20,7 +18,7 @@ services:
 before_install:
   - docker pull fr3akyphantom/pitchblack-builder:latest
 before_script:
-  - cd $HOME && tree -a -L 2 && mkdir pitchblack
+  - cd $HOME && mkdir pitchblack
   - wget -q https://github.com/rokibhasansagar/twrp_compressed_sources/releases/download/untagged-274084d99841b6134a78/PitchBlackRecoveryProject-master-norepo-20191010.tar.xz
     -O $HOME/pitchblack.tar.xz
   - tar -xJf pitchblack.tar.xz --directory $HOME/pitchblack/ && rm pitchblack.tar.xz
@@ -30,7 +28,7 @@ before_script:
   - ccache -M 2G
 script:
   - cd $HOME/pitchblack/ && git clone https://github.com/rokibhasansagar/android_device_twrp_WALTON_Primo_RX5.git -b pbrp3 device/WALTON/Primo_RX5
-  - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
+  # - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - rm -rf bootable/recovery && git clone https://github.com/rokibhasansagar/android_bootable_recovery -b features-patch-2 --single-branch bootable/recovery
   - git clone https://github.com/PitchBlackRecoveryProject/external_magisk-prebuilt external/magisk-prebuilt
   - |
@@ -40,9 +38,8 @@ script:
       -v "$HOME/.ccache:/srv/ccache" \
       fr3akyphantom/pitchblack-builder:latest \
       bash << EOF
-    apt-get update -qqy && apt-get install tree -qy
     cd /home/builder/pitchblack/
-    tree -a -f -L 2 || echo "tree error" 
+    tree -a -f -L 3
     source build/envsetup.sh
     lunch omni_Primo_RX5-userdebug
     set -e
@@ -54,22 +51,22 @@ after_success:
   - cp out/target/product/Primo_RX5/PitchBlack-*.zip .
   - curl -s --upload-file PitchBlack-*.zip https://transfer.sh/ && echo ""
   - wput PitchBlack-*.zip ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//PBTWBuild-$(date +%Y%m%d-%H%M)/
-deploy:
-  skip_cleanup: true
-  provider: releases
-  api_key:
-    secure: "K77oR/TPjI1E5QPejZB1n56eIhQm2a1dS44JDLAmC/o/r8mmSDPRE9jpJzviahv1jM/Ck4X6SFN+c/U7gA48yzmm9YVs6QvKzvds+4AQxf4eqBFQsIwKhelegLAdzs8mBflj9oPuWR+xLFc5WDUHklRFsWs+B1vna76OjL97ZWxwhRpGbWjqathQNvzrIwAFJ6+q9InpqOf7+x8fp0Fr5fUJHiiXZcty0+NNc/T0NqNmkNVgsAwgVEFv+pieDCUJCUbfWoDDJ8j8YzPj2TpzIGZQ+6psNy+L+07wh+SFDV0G6aK1jWPqu09HdhfxRYhBS+3fxbYFJrTv36dM+Nq2uK+ChWD1Q4ovy4XqSR3OQQCN5/yQSCDvX/JZ24ehcvwvWsBqZ7J11duFFLjSpap+g8rGi36JjN/JrG0F/4RQrneOrMIYWA5avN+N+lP/bNquEO7Zde/nGMIKxAQ3r9nvZxlNdc1oucN89k6Y1lWTo44SH9CgP6JCMEbzpW0aIe9phz3cRutJ60rFe9vLQLPmOHyBBPKOALF/MbvRCGdwgu0ciVqUB3SbV+UdeabG7ScVSDaUZ7gAqAsO/a17rLYYcRLSPpyoapCJTYL7vIvQFF66vUGOZMKwSI45TF9xG/bvcxVIi0IMvU8OgzKS7jGf63BIGNFaZxV+QXPZKoCn9T0="
-  file_glob: true
-  file: $HOME/pitchblack/PitchBlack-*.zip
-  on:
-    tags: false
-    branch: pbrp3
+# deploy:
+#   skip_cleanup: true
+#   provider: releases
+#   api_key:
+#     secure: "K77oR/TPjI1E5QPejZB1n56eIhQm2a1dS44JDLAmC/o/r8mmSDPRE9jpJzviahv1jM/Ck4X6SFN+c/U7gA48yzmm9YVs6QvKzvds+4AQxf4eqBFQsIwKhelegLAdzs8mBflj9oPuWR+xLFc5WDUHklRFsWs+B1vna76OjL97ZWxwhRpGbWjqathQNvzrIwAFJ6+q9InpqOf7+x8fp0Fr5fUJHiiXZcty0+NNc/T0NqNmkNVgsAwgVEFv+pieDCUJCUbfWoDDJ8j8YzPj2TpzIGZQ+6psNy+L+07wh+SFDV0G6aK1jWPqu09HdhfxRYhBS+3fxbYFJrTv36dM+Nq2uK+ChWD1Q4ovy4XqSR3OQQCN5/yQSCDvX/JZ24ehcvwvWsBqZ7J11duFFLjSpap+g8rGi36JjN/JrG0F/4RQrneOrMIYWA5avN+N+lP/bNquEO7Zde/nGMIKxAQ3r9nvZxlNdc1oucN89k6Y1lWTo44SH9CgP6JCMEbzpW0aIe9phz3cRutJ60rFe9vLQLPmOHyBBPKOALF/MbvRCGdwgu0ciVqUB3SbV+UdeabG7ScVSDaUZ7gAqAsO/a17rLYYcRLSPpyoapCJTYL7vIvQFF66vUGOZMKwSI45TF9xG/bvcxVIi0IMvU8OgzKS7jGf63BIGNFaZxV+QXPZKoCn9T0="
+#   file_glob: true
+#   file: $HOME/pitchblack/PitchBlack-*.zip
+#   on:
+#     tags: false
+#     branch: pbrp3
 branches:
   only:
   - pbrp3
   except:
   - /^(?i:untagged)-.*$/
   - /^v\d+\.\d+(\.\d+)?(-\S*)?$/
-notifications:
-  email:
-  - rokibhasansagar2014@outlook.com
+# notifications:
+#   email:
+#   - rokibhasansagar2014@outlook.com
