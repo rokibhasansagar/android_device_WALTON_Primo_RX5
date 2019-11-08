@@ -49,7 +49,9 @@ script:
 after_success:
   - cd $HOME/pitchblack/
   - cp out/target/product/Primo_RX5/PitchBlack-*.zip .
+  - cp out/target/product/Primo_RX5/recovery.img .
   - curl -s --upload-file PitchBlack-*.zip https://transfer.sh/ && echo ""
+  - curl -s --upload-file recovery.img https://transfer.sh/ && echo ""
   - wput PitchBlack-*.zip ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//PBTWBuild-$(date +%Y%m%d-%H%M)/
 # deploy:
 #   skip_cleanup: true
