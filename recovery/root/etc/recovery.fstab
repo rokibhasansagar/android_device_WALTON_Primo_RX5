@@ -18,7 +18,7 @@
 
 /system       ext4        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/system        /dev/block/mmcblk0p20     flags=display="System";backup=1;canbewiped;wipeingui
 /cache        ext4        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/cache         /dev/block/mmcblk0p21     flags=display="Cache";canbewiped;wipeingui;wipeduringfactoryreset
-/data         ext4        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/userdata      /dev/block/mmcblk0p22     flags=length=-16384;display="Data";backup=1;canbewiped;wipeingui;wipeduringfactoryreset;settingsstorage;fileencryption="ice:aes-256-heh";encryptable=/dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/metadata
+/data         ext4        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/userdata      /dev/block/mmcblk0p22     flags=length=-16384;display="Data";backup=1;canbewiped;wipeingui;wipeduringfactoryreset;settingsstorage;encryptable=/dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/metadata
 
 /boot         emmc        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/boot          /dev/block/mmcblk0p7      flags=display="Boot";backup=1;flashimg=1
 /logo         emmc        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/logo          /dev/block/mmcblk0p9      flags=display="Logo";backup=1;flashimg=1
@@ -38,7 +38,7 @@ auto          vfat        /devices/platform/mt_usb*                             
 /proinfo      emmc        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/proinfo       /dev/block/mmcblk0p1      flags=display="Proinfo";backup=1
 /protect_f    ext4        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/protect1      /dev/block/mmcblk0p3      flags=display="Protect_F";backup=1
 /protect_s    ext4        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/protect2      /dev/block/mmcblk0p4      flags=display="Protect_S";backup=1
-/para         emmc        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/para          /dev/block/mmcblk0p6      flags=display="Parametr";backup=1
+/misc         emmc        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/para          /dev/block/mmcblk0p6      flags=display="Parametr";backup=1
 /secro        emmc        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/secro         /dev/block/mmcblk0p13     flags=display="Secro";backup=1;flashimg=1
 /tee1         emmc        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/tee1          /dev/block/mmcblk0p15     flags=display="Tee1";backup=1;flashimg=1
 /tee2         emmc        /dev/block/platform/mtk-msdc.0/11230000.msdc0/by-name/tee2          /dev/block/mmcblk0p16     flags=display="Tee2";backup=1;flashimg=1

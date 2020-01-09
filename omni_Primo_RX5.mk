@@ -15,26 +15,58 @@
 # limitations under the License.
 #
 
-$(call inherit-product, $(SRC_TARGET_DIR)/product/full_base.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/core_64_bit.mk)
+$(call inherit-product, $(SRC_TARGET_DIR)/product/embedded.mk)
 
+# Inherit some common Omni stuff.
+$(call inherit-product, vendor/omni/config/common.mk)
+
+# Copy zImage into place
 PRODUCT_COPY_FILES += device/WALTON/Primo_RX5/prebuilt/zImage:kernel
+# Fles under $(LOCAL_PATH)/recovery/root/ gets automatically copied into recovery
+# PRODUCT_COPY_FILES += $(LOCAL_PATH)/recovery/root/*:root/*
 
+# Set the main device brand flags
 PRODUCT_DEVICE := Primo_RX5
 PRODUCT_NAME := omni_Primo_RX5
 PRODUCT_BRAND := WALTON
 PRODUCT_MODEL := Primo_RX5
 PRODUCT_MANUFACTURER := WALTON
 
-# Ramdisk
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/recovery/root/etc/recovery.fstab:root/etc/recovery.fstab \
-    $(LOCAL_PATH)/recovery/root/sbin/permissive.sh:root/sbin/permissive.sh \
-    #platform/bionic/libc/zoneinfo/tzdata:root/system/usr/share/zoneinfo/tzdata \
-    $(LOCAL_PATH)/recovery/root/res/keys:root/res/keys \
-    $(LOCAL_PATH)/recovery/root/factory_init.project.rc:root/factory_init.project.rc \
-    $(LOCAL_PATH)/recovery/root/factory_init.rc:root/factory_init.rc \
-    $(LOCAL_PATH)/recovery/root/init.recovery.mt6735.rc:root/init.recovery.mt6735.rc \
-    $(LOCAL_PATH)/recovery/root/meta_init.modem.rc:root/meta_init.modem.rc \
-    $(LOCAL_PATH)/recovery/root/meta_init.project.rc:root/meta_init.project.rc \
-    $(LOCAL_PATH)/recovery/root/meta_init.rc:root/meta_init.rc \
-    $(LOCAL_PATH)/recovery/root/ueventd.mt6735.rc:root/ueventd.mt6735.rc
+# From full_base.mk
+# Put en_US first in the list, so make it default.
+PRODUCT_LOCALES := en_US
+
+# From runtime_libart.mk
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    dalvik.vm.image-dex2oat-Xms=64m \
+    dalvik.vm.image-dex2oat-Xmx=64m \
+    dalvik.vm.dex2oat-Xms=64m \
+    dalvik.vm.dex2oat-Xmx=512m \
+    ro.dalvik.vm.native.bridge=0
+
+ADDITIONAL_DEFAULT_PROPERTIES += \
+    pm.dexopt.first-boot=interpret-only \
+    pm.dexopt.boot=verify-profile \
+    pm.dexopt.install=interpret-only \
+    pm.dexopt.bg-dexopt=speed-profile \
+    pm.dexopt.ab-ota=speed-profile \
+    pm.dexopt.nsys-library=speed \
+    pm.dexopt.shared-apk=speed \
+    pm.dexopt.forced-dexopt=speed \
+    pm.dexopt.core-app=speed \
+    dalvik.vm.image-dex2oat-filter=verify-at-runtime \
+    dalvik.vm.dex2oat-filter=verify-at-runtime \
+    dalvik.vm.usejit=true
+
+# adb is already there, so just add mtp for now
+PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
+    persist.sys.usb.config=mtp
+
+PRODUCT_BUILD_PROP_OVERRIDES += \
+    BUILD_FINGERPRINT="WALTON/Primo_RX5/Primo_RX5:6.0/MRA58K/1465782828:user/release-keys" \
+    PRIVATE_BUILD_DESC="full_gionee6735_65u_m0-user 6.0 MRA58K 1465782828 release-keys"
+
+# try force addition of fingerprint
+BUILD_FINGERPRINT := "WALTON/Primo_RX5/Primo_RX5:6.0/MRA58K/1465782828:user/release-keys"
+
