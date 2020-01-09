@@ -1,8 +1,9 @@
 os: linux
-dist: xenial
+dist: bionic
+language: generic
 sudo: required
 git:
-  depth: 3
+  depth: 1
 addons:
   apt:
     update:
@@ -29,12 +30,13 @@ script:
   - rm -rf bootable/recovery && git clone https://github.com/omnirom/android_bootable_recovery -b android-9.0 --depth 1 bootable/recovery
   - rm -rf external/busybox && git clone https://github.com/omnirom/android_external_busybox -b android-9.0 --depth 1 external/busybox
   - rm -rf external/ntfs-3g && git clone https://github.com/omnirom/android_external_ntfs-3g -b android-7.1 --depth 1 external/ntfs-3g
-  - git clone https://github.com/ZeoRexDevs/device_generic_mtk_twrpbuilder device/generic/twrpbuilder
   - |
     docker run --rm -i -e USER_ID=$(id -u) -e GROUP_ID=$(id -g) -v "$(pwd):/home/cmbuild/twrp/:rw,z" yshalsager/cyanogenmod bash << EOF
-    sudo apt-get update -qqy && sudo apt-get upgrade -qqy
+    sudo apt-get update -qqy && sudo apt-get upgrade -qqy --no-install-recommends
     cd /home/cmbuild/twrp/
-    source build/envsetup.sh && lunch omni_Primo_RX5-eng && mka recoveryimage 1>/dev/null
+    source build/envsetup.sh
+    lunch omni_Primo_RX5-userdebug
+    mka recoveryimage 1>/dev/null
     exit
     EOF
 after_success:
@@ -44,7 +46,6 @@ after_success:
   - cd $HOME/twrp/out/target/product/Primo_RX5/system/
   - tar -I pxz -cf $HOME/twrp/extra-system-files-$nowTime.tar.xz *
   - cd $HOME/twrp/
-  - #curl -s --upload-file TWRP-$version-Primo_RX5-$(date +"%Y%m%d")-Unofficial.img https://transfer.sh/ && echo ""
   - wput TWRP-$version-Primo_RX5-$nowTime-Unofficial.img ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$version-$nowTime/
   - wput extra-system-files-$nowTime.tar.xz ftp://"$FTPUser":"$FTPPass"@"$FTPHost"//TWBuild-$version-$nowTime/
 deploy:
@@ -56,7 +57,6 @@ deploy:
   file: $HOME/twrp/*.img
   on:
     tags: false
-    repo: rokibhasansagar/android_device_twrp_WALTON_Primo_RX5
     branch: master
 branches:
   only:
@@ -67,3 +67,4 @@ branches:
 notifications:
   email:
   - rokibhasansagar2014@outlook.com
+
