@@ -1,7 +1,7 @@
 os: linux
 dist: bionic
+group: edge
 language: generic
-sudo: required
 git:
   depth: 1
 addons:
@@ -58,7 +58,7 @@ deploy:
   file_glob: true
   file: $HOME/twrp/*.img
   on:
-    branch: master
+    branch: droid
 branches:
   only:
     - droid
