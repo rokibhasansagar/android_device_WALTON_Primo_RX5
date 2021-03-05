@@ -1,0 +1,22 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  workflow_dispatch:
+
+jobs:
+  recovery_builder:
+    runs-on: ubuntu-latest
+    # You can use either of the ubuntu-18.04 or ubuntu-20.04 runner
+    steps:
+      # Cleanup The Actions Workspace Using Custom Composite Run Actions
+      - name: "Cleanup Environment"
+        uses: rokibhasansagar/slimhub_actions@main
+      - run: printenv | sort
+      # That's it! Now use this action
+      - name: "Recovery Compilation"
+        uses: CarbonatedBlack/Recovery-Compiler@production
+        env:
+          MANIFEST: "https://github.com/OmniROM-Legacy/android -b android-6.0"
+      - run: printenv | sort
