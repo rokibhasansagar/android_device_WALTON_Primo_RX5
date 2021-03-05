@@ -19,4 +19,5 @@ jobs:
         uses: CarbonatedBlack/Recovery-Compiler@production
         env:
           MANIFEST: "https://github.com/OmniROM-Legacy/android -b android-6.0"
+          EXTRA_CMD: "rm -rf build/tools/roomservice.py && curl -sL https://gist.github.com/rokibhasansagar/247ddd4ef00dcc9d3340397322051e6a/raw/roomservice_60.py -o build/tools/roomservice.py && chmod a+x build/tools/roomservice.py"
       - run: printenv | sort
